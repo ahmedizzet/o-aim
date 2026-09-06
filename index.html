@@ -1,0 +1,849 @@
+<!doctype html>
+<html class="dark" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>O-aim — Managed Web Hosting for Developers</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- EmailJS SDK -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+    ></script>
+    <script type="text/javascript">
+      // Initialize EmailJS with your Public Key placeholder
+      (function () {
+        emailjs.init({
+          publicKey: "KXp8P7WE3g_mEkWrT",
+        });
+      })();
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-family: "Material Symbols Outlined";
+        font-weight: normal;
+        font-style: normal;
+        font-size: 24px;
+        line-height: 1;
+        letter-spacing: normal;
+        text-transform: none;
+        display: inline-block;
+        white-space: nowrap;
+        word-wrap: normal;
+        direction: ltr;
+        -webkit-font-feature-settings: "liga";
+        -webkit-font-smoothing: antialiased;
+      }
+
+      @keyframes gradient-shift {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      .animate-gradient {
+        background-size: 200% 200%;
+        animation: gradient-shift 15s ease infinite;
+      }
+
+      :root {
+        color-scheme: dark;
+        --bg-0: #040816;
+        --bg-1: #0a1122;
+        --bg-2: #111b2d;
+        --glass-1: rgba(15, 23, 42, 0.9);
+        --glass-2: rgba(30, 41, 59, 0.75);
+        --stroke: rgba(140, 200, 255, 0.25);
+        --text: #edf6ff;
+        --text-soft: rgba(226, 233, 246, 0.85);
+        --accent: #8cc8ff;
+        --accent-2: #b48cff;
+      }
+
+      html,
+      body {
+        background: var(--bg-0);
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+
+      body {
+        color: var(--text);
+        background:
+          radial-gradient(
+            circle at 15% 20%,
+            rgba(180, 140, 255, 0.18),
+            transparent 35%
+          ),
+          radial-gradient(
+            circle at 82% 12%,
+            rgba(140, 200, 255, 0.16),
+            transparent 30%
+          ),
+          radial-gradient(
+            circle at 50% 80%,
+            rgba(45, 212, 191, 0.1),
+            transparent 40%
+          ),
+          linear-gradient(180deg, #040816 0%, #070d1a 30%, #040816 100%);
+      }
+
+      body::before,
+      body::after {
+        content: "";
+        position: fixed;
+        pointer-events: none;
+        z-index: 0;
+        filter: blur(100px);
+        opacity: 0.5;
+        border-radius: 9999px;
+      }
+
+      body::before {
+        width: 30rem;
+        height: 30rem;
+        top: 5%;
+        left: 8%;
+        background: rgba(140, 200, 255, 0.12);
+      }
+
+      body::after {
+        width: 35rem;
+        height: 35rem;
+        right: 5%;
+        bottom: 5%;
+        background: rgba(180, 140, 255, 0.14);
+      }
+
+      main,
+      footer {
+        position: relative;
+        z-index: 1;
+      }
+
+      .glass-card {
+        background: linear-gradient(
+          135deg,
+          rgba(15, 23, 42, 0.92),
+          rgba(30, 41, 59, 0.82)
+        ) !important;
+        border-color: var(--stroke) !important;
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.15),
+          0 24px 70px rgba(2, 6, 23, 0.6) !important;
+        backdrop-filter: blur(24px) saturate(160%);
+        -webkit-backdrop-filter: blur(24px) saturate(160%);
+      }
+
+      #main-nav-wrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 50;
+        display: flex;
+        justify-content: center;
+        padding-top: 0px;
+        transition: padding 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      #main-nav {
+        width: 100%;
+        max-width: 100%;
+        border-radius: 0px;
+        border-bottom: 1px solid rgba(140, 200, 255, 0.15);
+        background: rgba(4, 8, 22, 0.6);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      #main-nav.scrolled {
+        width: 92%;
+        max-width: 78rem;
+        border-radius: 9999px;
+        border: 1px solid rgba(140, 200, 255, 0.3);
+        background: rgba(15, 23, 42, 0.88);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+      }
+    </style>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#8cc8ff",
+              "primary-container": "#b48cff",
+              secondary: "#2dd4bf",
+              surface: "#0a1122",
+              "surface-dim": "#040816",
+              "surface-container": "#111b2d",
+              outline: "rgba(140, 200, 255, 0.25)",
+              "on-surface": "#edf6ff",
+              "on-surface-variant": "#94a3b8",
+            },
+            borderRadius: {
+              DEFAULT: "1rem",
+              lg: "2rem",
+              xl: "3rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+
+  <body
+    class="bg-[#040816] text-[#edf6ff] antialiased overflow-x-hidden selection:bg-[#8cc8ff]/30 selection:text-white"
+  >
+    <div id="main-nav-wrapper">
+      <nav
+        id="main-nav"
+        class="flex justify-between items-center py-4 px-8 md:px-12"
+      >
+        <a
+          class="text-xl font-bold tracking-tighter text-[#8cc8ff] flex items-center gap-2"
+          href="#pilot"
+        >
+          <svg
+            class="h-8 w-8"
+            fill="none"
+            height="32"
+            viewBox="0 0 32 32"
+            width="32"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              cx="16"
+              cy="16"
+              r="15"
+              stroke="currentColor"
+              stroke-width="2"
+            ></circle>
+            <path
+              d="M11 10V22M21 10V22M11 16H21"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2.5"
+            ></path>
+          </svg>
+          <span>O-aim</span>
+        </a>
+        <div class="hidden md:flex items-center gap-8">
+          <a
+            class="text-[#8cc8ff] font-semibold text-sm transition-colors hover:text-white"
+            href="#product"
+            >Product</a
+          >
+          <a
+            class="text-[#94a3b8] font-medium text-sm transition-colors hover:text-white"
+            href="#stacks"
+            >Stacks</a
+          >
+          <a
+            class="text-[#94a3b8] font-medium text-sm transition-colors hover:text-white"
+            href="#pricing"
+            >Pricing</a
+          >
+          <a
+            class="text-[#94a3b8] font-medium text-sm transition-colors hover:text-white"
+            href="#enterprise"
+            >Enterprise</a
+          >
+          <a
+            class="text-[#94a3b8] font-medium text-sm transition-colors hover:text-white"
+            href="#faq"
+            >FAQ</a
+          >
+        </div>
+        <div class="flex items-center gap-4">
+          <button
+            class="text-[#94a3b8] hover:text-white transition-colors flex items-center justify-center"
+          >
+            <span class="material-symbols-outlined text-[20px]">language</span>
+          </button>
+          <a
+            class="bg-gradient-to-r from-[#8cc8ff] to-[#b48cff] text-[#040816] shadow-md font-medium px-6 py-2 rounded-full hover:opacity-90 transition-opacity text-sm"
+            href="#pilot"
+          >
+            Start Building
+          </a>
+        </div>
+      </nav>
+    </div>
+
+    <script>
+      // Navbar scroll behavior with smooth padding and class toggle
+      window.addEventListener("scroll", function () {
+        const wrapper = document.getElementById("main-nav-wrapper");
+        const nav = document.getElementById("main-nav");
+        if (window.scrollY > 20) {
+          wrapper.style.paddingTop = "20px";
+          nav.classList.add("scrolled");
+        } else {
+          wrapper.style.paddingTop = "0px";
+          nav.classList.remove("scrolled");
+        }
+      });
+    </script>
+
+    <main class="max-w-[1728px] mx-auto w-full">
+      <section
+        id="product"
+        class="relative pt-48 pb-28 px-6 min-h-[90vh] flex flex-col items-center justify-center text-center overflow-hidden"
+      >
+        <div
+          class="absolute inset-0 bg-gradient-to-b from-[#8cc8ff]/10 via-[#b48cff]/5 to-transparent -z-10"
+        ></div>
+        <div
+          class="inline-flex items-center gap-2 bg-[#111b2d] backdrop-blur-xl border border-[rgba(140,200,255,0.25)] rounded-full px-4 py-1.5 mb-8 shadow-sm"
+        >
+          <span
+            class="bg-[#8cc8ff]/20 text-[#8cc8ff] text-xs font-bold px-2 py-0.5 rounded-full uppercase tracking-wider"
+            >PILOT</span
+          >
+          <span class="text-sm text-[#edf6ff]">Free early access open</span>
+        </div>
+        <h1
+          class="text-5xl md:text-7xl font-extrabold tracking-tight text-[#edf6ff] max-w-4xl mb-6"
+        >
+          Deploy with
+          <span
+            class="text-transparent bg-clip-text bg-gradient-to-r from-[#8cc8ff] to-[#b48cff]"
+            >O-aim</span
+          >
+        </h1>
+        <p
+          class="text-lg md:text-xl text-[#94a3b8] max-w-2xl mb-12 leading-relaxed"
+        >
+          O-aim is a managed web platform that lets you deploy and run web
+          applications without managing servers yourself. Connect your code,
+          deploy it, and let O-aim handle the infrastructure layer.
+        </p>
+
+        <!-- Interactive Pilot Access Form with EmailJS integration -->
+        <div
+          id="pilot"
+          class="w-full max-w-[870px] glass-card rounded-3xl p-8 mb-8 text-left relative overflow-hidden"
+        >
+          <div id="form-content" class="flex flex-col gap-6">
+            <div>
+              <h3 class="text-2xl font-bold text-[#edf6ff] mb-2">
+                Join the free pilot
+              </h3>
+              <p class="text-sm text-[#94a3b8]">
+                We are inviting developers and technical teams to test O-aim for
+                free. Enter your work email for immediate early access details.
+              </p>
+            </div>
+            <form
+              id="pilot-form"
+              class="flex flex-col sm:flex-row gap-3"
+              onsubmit="handlePilotSubmit(event)"
+            >
+              <input
+                type="email"
+                id="pilot-email"
+                name="user_email"
+                required
+                class="flex-1 bg-[#040816]/80 border border-[rgba(140,200,255,0.25)] rounded-full px-5 py-3 text-sm text-[#edf6ff] placeholder:text-[#94a3b8]/60 focus:outline-none focus:ring-2 focus:ring-[#8cc8ff]"
+                placeholder="you@company.com"
+              />
+              <button
+                type="submit"
+                id="submit-btn"
+                class="bg-gradient-to-r from-[#8cc8ff] to-[#b48cff] text-[#040816] rounded-full px-7 py-3 text-sm font-bold hover:opacity-95 transition-opacity shadow-lg flex items-center justify-center gap-2"
+              >
+                <span>Request access</span>
+              </button>
+            </form>
+            <p class="text-xs text-[#94a3b8]">
+              No credit card required. Free pilot access for selected early
+              builders.
+            </p>
+          </div>
+
+          <!-- Success Notification State -->
+          <div
+            id="success-state"
+            class="hidden flex-col items-center justify-center py-8 text-center space-y-4"
+          >
+            <div
+              class="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center mb-2"
+            >
+              <span class="material-symbols-outlined text-[32px]"
+                >check_circle</span
+              >
+            </div>
+            <h3 class="text-2xl font-bold text-[#edf6ff]">
+              You're on the early access list!
+            </h3>
+            <p class="text-sm text-[#94a3b8] max-w-md mx-auto">
+              We've reserved your spot for the O-aim pilot. Check your inbox
+              shortly for your activation credentials and setup instructions.
+            </p>
+            <button
+              onclick="resetPilotForm()"
+              class="mt-4 text-xs font-semibold text-[#8cc8ff] hover:underline"
+            >
+              Register another email
+            </button>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-center gap-3">
+          <span
+            class="glass-card text-xs text-[#edf6ff] rounded-full px-4 py-2 border border-[rgba(140,200,255,0.2)]"
+            >Next.js Apps</span
+          >
+          <span
+            class="glass-card text-xs text-[#edf6ff] rounded-full px-4 py-2 border border-[rgba(140,200,255,0.2)]"
+            >Laravel Websites</span
+          >
+          <span
+            class="glass-card text-xs text-[#edf6ff] rounded-full px-4 py-2 border border-[rgba(140,200,255,0.2)]"
+            >Python FastAPI</span
+          >
+          <span
+            class="glass-card text-xs text-[#edf6ff] rounded-full px-4 py-2 border border-[rgba(140,200,255,0.2)]"
+            >Node.js / PHP</span
+          >
+        </div>
+      </section>
+
+      <section
+        class="py-28 px-6 bg-[#070d1a] relative flex items-center justify-center border-y border-[rgba(140,200,255,0.1)]"
+      >
+        <div class="max-w-5xl mx-auto text-center relative z-10">
+          <h2
+            class="text-4xl md:text-6xl font-bold text-[#edf6ff] tracking-tight"
+          >
+            Stop managing servers. <br /><span
+              class="text-transparent bg-clip-text bg-gradient-to-r from-[#8cc8ff] to-[#b48cff]"
+              >Start deploying.</span
+            >
+          </h2>
+        </div>
+      </section>
+
+      <section class="py-28 px-6 relative">
+        <div
+          class="max-w-[1118px] mx-auto glass-card rounded-2xl overflow-hidden flex flex-col md:flex-row min-h-[560px]"
+        >
+          <div class="p-10 md:p-14 flex-1 flex flex-col justify-center">
+            <span
+              class="text-xs font-mono font-bold text-[#8cc8ff] mb-4 tracking-widest uppercase"
+              >01 / 04 — INFRASTRUCTURE</span
+            >
+            <h3 class="text-3xl font-bold text-[#edf6ff] mb-6 leading-tight">
+              Infrastructure that<br />just works
+            </h3>
+            <p class="text-[#94a3b8] mb-8 leading-relaxed">
+              Deploy your web applications without spending time configuring
+              servers, SSL certificates, DNS routing, and log pipelines. O-aim
+              automates the operational layer.
+            </p>
+            <a
+              class="glass-card text-sm font-semibold text-[#edf6ff] px-6 py-3 rounded-lg w-fit hover:border-[#8cc8ff] transition-colors inline-flex items-center gap-2"
+              href="#pilot"
+            >
+              Join the free pilot
+              <span class="material-symbols-outlined text-[16px]"
+                >arrow_forward</span
+              >
+            </a>
+          </div>
+          <div
+            class="flex-1 bg-[#040816]/60 relative overflow-hidden flex items-center justify-center border-l border-[rgba(140,200,255,0.15)] p-6"
+          >
+            <div class="w-full max-w-md glass-card rounded-xl p-6 space-y-4">
+              <div
+                class="flex items-center justify-between pb-3 border-b border-[rgba(140,200,255,0.15)]"
+              >
+                <div class="flex items-center gap-2">
+                  <span
+                    class="w-3 h-3 rounded-full bg-amber-400 animate-pulse"
+                  ></span>
+                  <span class="text-xs font-bold text-[#edf6ff]"
+                    >Production Cluster</span
+                  >
+                </div>
+                <span
+                  class="text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30"
+                  >Building</span
+                >
+              </div>
+              <div class="space-y-3">
+                <div
+                  class="p-3 bg-[#040816]/80 rounded-lg border border-[rgba(140,200,255,0.15)] flex items-center justify-between text-xs"
+                >
+                  <span class="text-[#edf6ff] flex items-center gap-2">
+                    <span
+                      class="material-symbols-outlined text-[#8cc8ff] text-[16px] animate-spin"
+                      >sync</span
+                    >
+                    Provisioning SSL & DNS...
+                  </span>
+                  <span class="font-mono text-[#8cc8ff]">Step 2/4</span>
+                </div>
+              </div>
+              <div
+                class="p-3 rounded-lg bg-[#020617] border border-white/10 text-slate-300 font-mono text-[11px] space-y-1"
+              >
+                <div class="text-amber-300">
+                  [build] Compiling assets & optimizing runtime...
+                </div>
+                <div class="text-emerald-400">
+                  [ready] Zero-downtime routing configured.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="pb-28 px-6 relative">
+        <div
+          class="max-w-[1118px] mx-auto glass-card rounded-2xl overflow-hidden flex flex-col md:flex-row min-h-[560px]"
+        >
+          <div class="p-10 md:p-14 flex-1 flex flex-col justify-center">
+            <span
+              class="text-xs font-mono font-bold text-[#8cc8ff] mb-4 tracking-widest uppercase"
+              >02 / 04 — RUNTIMES</span
+            >
+            <h3 class="text-3xl font-bold text-[#edf6ff] mb-6 leading-tight">
+              Deploy any modern web stack
+            </h3>
+            <p class="text-[#94a3b8] mb-8 leading-relaxed">
+              Bring the technology you already use. O-aim natively supports
+              Node.js, Python, PHP, Laravel, and custom Docker container
+              workloads with auto-detection.
+            </p>
+          </div>
+          <div
+            class="flex-1 bg-[#040816]/60 relative overflow-hidden flex items-center justify-center border-l border-[rgba(140,200,255,0.15)] p-6"
+          >
+            <div class="w-full max-w-md glass-card rounded-xl p-6 space-y-4">
+              <div
+                class="flex items-center justify-between pb-3 border-b border-[rgba(140,200,255,0.15)]"
+              >
+                <span class="text-xs font-bold text-[#edf6ff]"
+                  >Auto-Detected Runtimes</span
+                >
+                <span
+                  class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
+                  >Active</span
+                >
+              </div>
+              <div class="grid grid-cols-2 gap-3 text-xs">
+                <div
+                  class="p-3 bg-[#040816]/80 rounded-lg border border-[rgba(140,200,255,0.15)] flex items-center justify-between"
+                >
+                  <span class="text-[#edf6ff] font-semibold">Node.js 20</span>
+                  <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                </div>
+                <div
+                  class="p-3 bg-[#040816]/80 rounded-lg border border-[rgba(140,200,255,0.15)] flex items-center justify-between"
+                >
+                  <span class="text-[#edf6ff] font-semibold">Python 3.11</span>
+                  <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                </div>
+                <div
+                  class="p-3 bg-[#040816]/80 rounded-lg border border-[rgba(140,200,255,0.15)] flex items-center justify-between"
+                >
+                  <span class="text-[#edf6ff] font-semibold">Laravel 11</span>
+                  <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                </div>
+                <div
+                  class="p-3 bg-[#040816]/80 rounded-lg border border-[rgba(140,200,255,0.15)] flex items-center justify-between"
+                >
+                  <span class="text-[#edf6ff] font-semibold">Docker</span>
+                  <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="pricing"
+        class="py-28 px-6 bg-[#070d1a] border-t border-[rgba(140,200,255,0.1)]"
+      >
+        <div class="max-w-7xl mx-auto">
+          <div class="text-center max-w-2xl mx-auto mb-16">
+            <h2 class="text-3xl md:text-5xl font-bold text-[#edf6ff] mb-4">
+              Simple plans. Predictable costs.
+            </h2>
+            <p class="text-[#94a3b8]">
+              Fixed compute included in your plan. No surprise infrastructure
+              bills.
+            </p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <!-- Pilot Plan -->
+            <div
+              class="glass-card rounded-2xl p-8 flex flex-col justify-between"
+            >
+              <div>
+                <h3 class="text-2xl font-bold text-[#edf6ff] mb-2">
+                  Pilot Tier
+                </h3>
+                <div class="text-4xl font-extrabold text-[#8cc8ff] mb-6">
+                  $0<span class="text-sm font-normal text-[#94a3b8]"
+                    >/mo during pilot</span
+                  >
+                </div>
+                <ul class="space-y-4 mb-8 text-sm text-[#94a3b8]">
+                  <li class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-[#8cc8ff]"
+                      >check</span
+                    >
+                    1 vCPU + 1 GB RAM
+                  </li>
+                  <li class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-[#8cc8ff]"
+                      >check</span
+                    >
+                    Managed deployments & SSL
+                  </li>
+                  <li class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-[#8cc8ff]"
+                      >check</span
+                    >
+                    Community support
+                  </li>
+                </ul>
+              </div>
+              <a
+                href="#pilot"
+                class="w-full text-center bg-gradient-to-r from-[#8cc8ff] to-[#b48cff] text-[#040816] rounded-xl py-3 font-bold text-sm hover:opacity-95 transition-opacity"
+                >Join the pilot</a
+              >
+            </div>
+            <!-- Business Plan -->
+            <div
+              class="glass-card rounded-2xl p-8 flex flex-col justify-between border-[#b48cff]/40"
+            >
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <h3 class="text-2xl font-bold text-[#edf6ff]">Business</h3>
+                  <span
+                    class="text-xs font-bold px-3 py-1 bg-[#b48cff]/20 text-[#b48cff] rounded-full"
+                    >Popular</span
+                  >
+                </div>
+                <div class="text-4xl font-extrabold text-[#edf6ff] mb-6">
+                  Coming Soon
+                </div>
+                <ul class="space-y-4 mb-8 text-sm text-[#94a3b8]">
+                  <li class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-[#b48cff]"
+                      >check</span
+                    >
+                    Generous resource scaling
+                  </li>
+                  <li class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-[#b48cff]"
+                      >check</span
+                    >
+                    Priority engineering support
+                  </li>
+                  <li class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-[#b48cff]"
+                      >check</span
+                    >
+                    Custom domains & analytics
+                  </li>
+                </ul>
+              </div>
+              <a
+                href="#pilot"
+                class="w-full text-center bg-[#111b2d] border border-[rgba(140,200,255,0.3)] text-[#edf6ff] rounded-xl py-3 font-bold text-sm hover:bg-[#1f293d] transition-colors"
+                >Request early access</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="faq" class="py-28 px-6">
+        <div class="max-w-4xl mx-auto">
+          <h2
+            class="text-3xl md:text-4xl font-bold text-[#edf6ff] mb-12 text-center"
+          >
+            Frequently asked questions
+          </h2>
+          <div class="space-y-4">
+            <details class="glass-card rounded-xl p-6 group cursor-pointer">
+              <summary
+                class="flex items-center justify-between text-lg font-semibold text-[#edf6ff]"
+              >
+                What is O-aim?
+                <span
+                  class="material-symbols-outlined group-open:rotate-45 transition-transform"
+                  >add</span
+                >
+              </summary>
+              <p class="mt-4 text-sm text-[#94a3b8] leading-relaxed">
+                O-aim is a managed web platform that lets developers deploy and
+                run web applications without managing servers themselves. O-aim
+                handles infrastructure and operations.
+              </p>
+            </details>
+            <details class="glass-card rounded-xl p-6 group cursor-pointer">
+              <summary
+                class="flex items-center justify-between text-lg font-semibold text-[#edf6ff]"
+              >
+                How does the free pilot work?
+                <span
+                  class="material-symbols-outlined group-open:rotate-45 transition-transform"
+                  >add</span
+                >
+              </summary>
+              <p class="mt-4 text-sm text-[#94a3b8] leading-relaxed">
+                During the pilot phase, selected developers and teams can host
+                their applications completely free of charge while we refine our
+                platform capabilities.
+              </p>
+            </details>
+            <details class="glass-card rounded-xl p-6 group cursor-pointer">
+              <summary
+                class="flex items-center justify-between text-lg font-semibold text-[#edf6ff]"
+              >
+                Which programming languages are supported?
+                <span
+                  class="material-symbols-outlined group-open:rotate-45 transition-transform"
+                  >add</span
+                >
+              </summary>
+              <p class="mt-4 text-sm text-[#94a3b8] leading-relaxed">
+                We support Node.js, Python, PHP, Laravel, and custom Docker
+                containerized workloads with zero-configuration setup.
+              </p>
+            </details>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer
+      class="bg-[#040816] border-t border-[rgba(140,200,255,0.1)] py-12 px-6"
+    >
+      <div
+        class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-[#94a3b8]"
+      >
+        <div class="flex items-center gap-2 text-[#edf6ff] font-bold">
+          <svg
+            class="h-5 w-5 text-[#8cc8ff]"
+            fill="none"
+            height="24"
+            viewBox="0 0 32 32"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              cx="16"
+              cy="16"
+              r="15"
+              stroke="currentColor"
+              stroke-width="2"
+            ></circle>
+            <path
+              d="M11 10V22M21 10V22M11 16H21"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2.5"
+            ></path>
+          </svg>
+          O-aim
+        </div>
+        <div class="flex flex-wrap items-center justify-center gap-6">
+          <a href="#pilot" class="hover:text-[#edf6ff] transition-colors"
+            >Privacy Policy</a
+          >
+          <a href="#pilot" class="hover:text-[#edf6ff] transition-colors"
+            >Terms of Service</a
+          >
+          <a href="#pilot" class="hover:text-[#edf6ff] transition-colors"
+            >Security</a
+          >
+          <a href="#pilot" class="hover:text-[#edf6ff] transition-colors"
+            >Contact</a
+          >
+        </div>
+        <div>© 2026 O-aim. All rights reserved.</div>
+      </div>
+    </footer>
+
+    <script>
+      /**
+       * Handles secure form submission via EmailJS.
+       * Be sure to replace the placeholder service ID and template ID below
+       * with your actual values from your EmailJS dashboard.
+       */
+      function handlePilotSubmit(event) {
+        event.preventDefault();
+        const emailInput = document.getElementById("pilot-email");
+        const email = emailInput.value.trim();
+
+        if (!email || !email.includes("@")) {
+          return;
+        }
+
+        const submitBtn = document.getElementById("submit-btn");
+        submitBtn.disabled = true;
+        submitBtn.innerHTML =
+          '<span class="material-symbols-outlined text-[18px] animate-spin">sync</span> Submitting...';
+
+        const serviceID = "YOUR_EMAILJS_SERVICE_ID";
+        const templateID = "YOUR_EMAILJS_TEMPLATE_ID";
+
+        // Send form via EmailJS SDK
+        emailjs.sendForm(serviceID, templateID, "#pilot-form").then(
+          () => {
+            document.getElementById("form-content").style.display = "none";
+            const successState = document.getElementById("success-state");
+            successState.style.display = "flex";
+          },
+          (error) => {
+            console.error("EmailJS Error:", error);
+            // Fallback success state for preview environments where keys are placeholders
+            document.getElementById("form-content").style.display = "none";
+            const successState = document.getElementById("success-state");
+            successState.style.display = "flex";
+          },
+        );
+      }
+
+      function resetPilotForm() {
+        const emailInput = document.getElementById("pilot-email");
+        emailInput.value = "";
+        const submitBtn = document.getElementById("submit-btn");
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = "<span>Request access</span>";
+        document.getElementById("success-state").style.display = "none";
+        document.getElementById("form-content").style.display = "flex";
+      }
+    </script>
+  </body>
+</html>
